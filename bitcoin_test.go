@@ -2,26 +2,38 @@ package bitcoin
 
 import (
   "testing"
-  "fmt"
 )
 
+var (
+  username string
+  password string
+  port int
+  host string
+)
+
+func init() {
+  username = "" // rpcuser in your bitcoin.conf
+  password = "" // rpcpassword in your bitcoin.conf
+  port = 18332 // default to testnet port.  Change to 8332 for live blockchain
+  host = "localhost"
+}
+
 func TestNewClient(t *testing.T) {
-  c := NewClient("", "", "localhost", 18332)
+  c := NewClient(username, password, host, port)
   if c == nil {
     t.Error()
   }
 }
 
 func TestMakeRequest(t *testing.T) {
-  c := NewClient("", "", "localhost", 18332)
+  c := NewClient(username, password, host, port)
   if c == nil {
     t.Error()
   }
 
   params := []string{}
-  result, err := c.MakeRequest("getinfo", params)
+  _, err := c.MakeRequest("getinfo", params)
   if err != nil {
     t.Error(err)
   }
-  fmt.Println(result)
 }

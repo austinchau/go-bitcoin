@@ -46,11 +46,9 @@ func (c *JsonRpc) MakeRequest(method string, params []string) (map[string]interf
   if err != nil {
     return nil, err
   }
-  // fmt.Println(resp.Header)
   
   defer resp.Body.Close()
   bytes, _ := ioutil.ReadAll(resp.Body)
-  // fmt.Println(string(bytes))
   
   var data map[string]interface{}
   json.Unmarshal(bytes, &data)
